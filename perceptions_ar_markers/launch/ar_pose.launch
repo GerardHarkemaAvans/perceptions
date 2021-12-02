@@ -1,6 +1,5 @@
 <launch>
   <arg name="use_platform"	   default="true" />
-  <arg name="use_state_publisher" default="true"/>
   <arg name="open_rviz"           default="true"/>
   <arg name="marker_frame_id"     default="world"/>
   <arg name="user_marker_size"	  default="3.0"/>
@@ -11,16 +10,7 @@
   <arg name="rgb_camera_info_url"   default="package://perceptions_camera/camera_info/$(arg camera_model).yaml" />
   <arg name="depth_camera_info_url" default="" />
 
-  <group if="$(arg use_state_publisher)">
-    <param name="robot_description"
-          command="$(find xacro)/xacro --inorder '$(find open_manipulator_description)/urdf/open_manipulator_robot.urdf.xacro'"/>
 
-    <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher">
-      <rosparam param="source_list" subst_value="true">["joint_states"]</rosparam>
-    </node>
-
-    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
-  </group>
 
   <group if="$(arg use_platform)">
 
@@ -126,6 +116,6 @@
 
   <group if="$(arg open_rviz)">
     <node pkg="rviz" type="rviz" name="rviz" required="true"
-      args="-d $(find open_manipulator_ar_markers)/rviz/ar_marker.rviz"/>
+      args="-d $(find perceptions_ar_markers)/rviz/ar_marker.rviz"/>
   </group>
 </launch>
